@@ -31,6 +31,9 @@ class LinkButton extends Control
     /** @var string */
     protected $disabled;
 
+    /** @var string */
+    protected $visibled = true;
+
     /**
      * @param string $href
      * @return $this
@@ -91,10 +94,25 @@ class LinkButton extends Control
     }
 
     /**
+     * @param bool $value
+     * @return $this
+     */
+    public function visibled($value = true)
+    {
+        $this->visibled = $value;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function render()
     {
+		if ($this->visibled == false)
+        {
+            return "";
+        }
         if ($this->disabled)
         {
             $this->href = '#';
