@@ -11,7 +11,7 @@ return [
     'renderer' => 'bootstrap',
     
     'renderers' => [
-        'bootstrap' => inkvizytor\FluentForm\Renderers\Bootstrap3::class,
+        'bootstrap' => inkvizytor\FluentForm\Renderers\Bootstrap4::class,
         'foundation' => inkvizytor\FluentForm\Renderers\Foundation5::class
     ],
     
