@@ -95,18 +95,21 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderFieldStandard(Field $control, Group $group)
-    {
+    {        
+        if (!$control->isRendered())
+            return '';
+            
         $label = $this->fieldLabel($control, 'control-label');
-        $groupCss = array_merge(['form-group'], $group->getCss());
+        $groupCss = array_merge(['form-group', $control->getVisibledCss()], $group->getCss());
         $render = $this->decorate($control);
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        '.$this->applyWidth($render, $control->getWidth()).'
-        '.$this->renderErrors($control).'
-        '.$this->renderHelp($control).'
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                '.$this->applyWidth($render, $control->getWidth()).'
+                '.$this->renderErrors($control).'
+                '.$this->renderHelp($control).'
+            </div>
         ';
     }
 
@@ -116,20 +119,23 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderFieldHorizontal(Field $control, Group $group)
-    {
+    {        
+        if (!$control->isRendered())
+            return '';
+
         $label = $this->fieldLabel($control, $this->getLabelColumnClass($group));
-        $groupCss = array_merge(['form-group', 'row'], $group->getCss());
+        $groupCss = array_merge(['form-group', 'row', $control->getVisibledCss()], $group->getCss());
         $render = $this->decorate($control);
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        <div class="'.$this->getFieldColumnClass($group, empty($label) || $control->isSrOnly()).'">
-            '.$this->applyWidth($render, $control->getWidth()).'
-            '.$this->renderErrors($control).'
-            '.$this->renderHelp($control).'
-        </div>
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                <div class="'.$this->getFieldColumnClass($group, empty($label) || $control->isSrOnly()).'">
+                    '.$this->applyWidth($render, $control->getWidth()).'
+                    '.$this->renderErrors($control).'
+                    '.$this->renderHelp($control).'
+                </div>
+            </div>
         ';
     }
 
@@ -139,18 +145,21 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderFieldInline(Field $control, Group $group)
-    {
+    {        
+        if (!$control->isRendered())
+            return '';
+
         $label = $this->fieldLabel($control);
-        $groupCss = array_merge(['form-group'], $group->getCss());
+        $groupCss = array_merge(['form-group', $control->getVisibledCss()], $group->getCss());
         $render = $this->decorate($control);
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        '.$render.'
-        '.$this->renderErrors($control).'
-        '.$this->renderHelp($control).'
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                '.$render.'
+                '.$this->renderErrors($control).'
+                '.$this->renderHelp($control).'
+            </div>
         ';
     }
 
@@ -168,10 +177,10 @@ class Bootstrap4 extends Base
         $render = $group->render();
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        '.$render.'
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                '.$render.'
+            </div>
         ';
     }
 
@@ -187,12 +196,12 @@ class Bootstrap4 extends Base
         $render = $group->render();
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        <div class="'.$this->getFieldColumnClass($group, empty($label) || $control->isSrOnly()).'">
-            '.$render.'
-        </div>
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                <div class="'.$this->getFieldColumnClass($group, empty($label) || $control->isSrOnly()).'">
+                    '.$render.'
+                </div>
+            </div>
         ';
     }
 
@@ -208,10 +217,10 @@ class Bootstrap4 extends Base
         $render = $group->render();
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        '.$render.'
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                '.$render.'
+            </div>
         ';
     }
 
@@ -259,14 +268,14 @@ class Bootstrap4 extends Base
     protected function renderCheckableStandard(Checkable $control, Group $group)
     {
         $labelCss = $this->getCheckableCss($control);
-        $groupCss = array_merge([$labelCss], $group->getCss());
+        $groupCss = array_merge([$labelCss], $group->getCss(), $control->getVisibledCss());
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$this->decorate($control).'
-        '.$this->renderErrors($control).'
-        '.$this->renderHelp($control).'
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$this->decorate($control).'
+                '.$this->renderErrors($control).'
+                '.$this->renderHelp($control).'
+            </div>
         ';
     }
 
@@ -276,19 +285,22 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderCheckableHorizontal(Checkable $control, Group $group)
-    {
+    {        
+        if (!$control->isRendered())
+            return '';
+            
         $label = $this->decorate($control);
         $labelCss = $this->getCheckableCss($control);
-        $groupCss = array_merge(['form-group', 'row'], $group->getCss());
+        $groupCss = array_merge(['form-group', 'row', $control->getVisibledCss()], $group->getCss());
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        <div class="'.$this->getFieldColumnClass($group, true).'">
-            <div class="'.$labelCss.'">'.$label.'</div>
-            '.$this->renderErrors($control).'
-            '.$this->renderHelp($control).'
-        </div>
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                <div class="'.$this->getFieldColumnClass($group, true).'">
+                    <div class="'.$labelCss.'">'.$label.'</div>
+                    '.$this->renderErrors($control).'
+                    '.$this->renderHelp($control).'
+                </div>
+            </div>
         ';
     }
 
@@ -298,16 +310,19 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderCheckableInline(Checkable $control, Group $group)
-    {
+    {        
+        if (!$control->isRendered())
+            return '';
+            
         $labelCss = $this->getCheckableCss($control);
-        $groupCss = array_merge([$labelCss], $group->getCss());
+        $groupCss = array_merge([$labelCss], $group->getCss(), $control->getVisibledCss());
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$this->decorate($control).'
-        '.$this->renderErrors($control).'
-        '.$this->renderHelp($control).'
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$this->decorate($control).'
+                '.$this->renderErrors($control).'
+                '.$this->renderHelp($control).'
+            </div>
         ';
     }
 
@@ -344,17 +359,20 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderCheckableListStandard(CheckableList $control, Group $group)
-    {
+    {        
+        if (!$control->isRendered())
+            return '';
+            
         $label = $this->fieldLabel($control, 'control-label');
-        $groupCss = array_merge(['form-group'], $group->getCss());
+        $groupCss = array_merge(['form-group', $control->getVisibledCss()], $group->getCss());
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        '.$this->decorate($control).'
-        '.$this->renderErrors($control).'
-        '.$this->renderHelp($control).'
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                '.$this->decorate($control).'
+                '.$this->renderErrors($control).'
+                '.$this->renderHelp($control).'
+            </div>
         ';
     }
 
@@ -364,19 +382,22 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderCheckableListHorizontal(CheckableList $control, Group $group)
-    {
+    {        
+        if (!$control->isRendered())
+            return '';
+            
         $label = $this->fieldLabel($control, $this->getLabelColumnClass($group));
-        $groupCss = array_merge(['form-group', 'row'], $group->getCss());
+        $groupCss = array_merge(['form-group', 'row', $control->getVisibledCss()], $group->getCss());
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        <div class="'.$this->getFieldColumnClass($group, empty($label) || $control->isSrOnly()).'">
-            '.$this->decorate($control).'
-            '.$this->renderErrors($control).'
-            '.$this->renderHelp($control).'
-        </div>
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                <div class="'.$this->getFieldColumnClass($group, empty($label) || $control->isSrOnly()).'">
+                    '.$this->decorate($control).'
+                    '.$this->renderErrors($control).'
+                    '.$this->renderHelp($control).'
+                </div>
+            </div>
         ';
     }
 
@@ -386,17 +407,20 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderCheckableListInline(CheckableList $control, Group $group)
-    {
+    {        
+        if (!$control->isRendered())
+            return '';
+            
         $label = $this->fieldLabel($control);
-        $groupCss = array_merge(['form-group'], $group->getCss());
+        $groupCss = array_merge(['form-group', $control->getVisibledCss()], $group->getCss());
 
         return '
-    <div class="'.implode(' ', $groupCss).'">
-        '.$label.'
-        '.$this->decorate($control).'
-        '.$this->renderErrors($control).'
-        '.$this->renderHelp($control).'
-    </div>
+            <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
+                '.$this->decorate($control).'
+                '.$this->renderErrors($control).'
+                '.$this->renderHelp($control).'
+            </div>
         ';
     }
 

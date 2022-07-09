@@ -23,6 +23,12 @@ abstract class Field extends Control
     protected $disabled;
     
     /** @var string */
+    protected $visibled = true;
+    
+    /** @var string */
+    protected $rendered = true;
+
+    /** @var string */
     protected $readonly;
 
     /** @var string */
@@ -177,6 +183,52 @@ abstract class Field extends Control
     public function isDisabled()
     {
         return !empty($this->disabled);
+    }
+
+        /**
+     * @param bool $value
+     * @return $this
+     */
+    public function visibled($value = true)
+    {
+        $this->visibled = $value;
+        
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisibled()
+    {
+        return !empty($this->visibled);
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisibledCss()
+    {
+        return $this->visibled ? '' : 'hide';
+    }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function rendered($value = true)
+    {
+        $this->rendered = $value;
+        
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRendered()
+    {
+        return !empty($this->rendered);
     }
 
     /**

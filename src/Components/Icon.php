@@ -15,6 +15,9 @@ class Icon extends Control
     /** @var string */
     protected $title;
     
+    /** @var string */
+    protected $rendered = true;
+    
     /**
      * @param string $label
      * @param array $parameters
@@ -27,12 +30,34 @@ class Icon extends Control
 
         return $this;
     }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function rendered($value = true)
+    {
+        $this->rendered = $value;
+        
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRendered()
+    {
+        return !empty($this->rendered);
+    }
     
     /**
      * @return string
      */
     public function render()
     {
+        if ($this->rendered == false)
+            return "";
+
         return $this->html()->tag('i', $this->getOptions(), '');
     }
 }
