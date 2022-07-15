@@ -289,14 +289,15 @@ class Bootstrap4 extends Base
         if (!$control->isRendered())
             return '';
             
-        $label = $this->decorate($control);
-        $labelCss = $this->getCheckableCss($control);
+        $label = $this->fieldLabel($control, $this->getLabelColumnClass($group));
         $groupCss = array_merge(['form-group', 'row', $control->getVisibledCss()], $group->getCss());
+        $render = $this->decorate($control);
 
         return '
             <div class="'.implode(' ', $groupCss).'">
+                '.$label.'
                 <div class="'.$this->getFieldColumnClass($group, true).'">
-                    <div class="'.$labelCss.'">'.$label.'</div>
+                    '.$render.'
                     '.$this->renderErrors($control).'
                     '.$this->renderHelp($control).'
                 </div>
@@ -576,6 +577,8 @@ class Bootstrap4 extends Base
             {
                 $control->addClass('panel-default');
             }
+
+            $control->addClass($control->getVisibledCss());
             
             $control->attr('heading', ['class' => 'panel-heading']);
             $control->attr('body', ['class' => 'panel-body']);

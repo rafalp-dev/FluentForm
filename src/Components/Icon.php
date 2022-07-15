@@ -16,6 +16,9 @@ class Icon extends Control
     protected $title;
     
     /** @var string */
+    protected $visibled = true;
+    
+    /** @var string */
     protected $rendered = true;
     
     /**
@@ -29,6 +32,33 @@ class Icon extends Control
         $this->title = $this->translator()->get($label, $parameters, $locale);
 
         return $this;
+    }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function visibled($value = true)
+    {
+        $this->visibled = $value;
+        
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisibled()
+    {
+        return !empty($this->visibled);
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisibledCss()
+    {
+        return $this->visibled ? '' : 'hide';
     }
 
     /**
@@ -57,6 +87,9 @@ class Icon extends Control
     {
         if ($this->rendered == false)
             return "";
+
+        if (!empty($this->getVisibledCss()))
+            $this->addClass($this->getVisibledCss());
 
         return $this->html()->tag('i', $this->getOptions(), '');
     }

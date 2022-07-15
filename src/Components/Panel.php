@@ -25,12 +25,42 @@ class Panel extends Control
     /** @var array */
     protected $footer = [];
     
+    /** @var string */
+    protected $visibled = true;
+    
     /**
      * @return string
      */
     public function getMode()
     {
         return $this->mode;
+    }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function visibled($value = true)
+    {
+        $this->visibled = $value;
+        
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisibled()
+    {
+        return !empty($this->visibled);
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisibledCss()
+    {
+        return $this->visibled ? '' : 'hide';
     }
 
     /**
