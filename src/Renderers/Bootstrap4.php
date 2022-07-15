@@ -267,8 +267,11 @@ class Bootstrap4 extends Base
      */
     protected function renderCheckableStandard(Checkable $control, Group $group)
     {
+        if (!$control->isRendered())
+            return '';
+            
         $labelCss = $this->getCheckableCss($control);
-        $groupCss = array_merge([$labelCss], $group->getCss(), $control->getVisibledCss());
+        $groupCss = array_merge([$labelCss], $group->getCss(), [$control->getVisibledCss()]);
 
         return '
             <div class="'.implode(' ', $groupCss).'">
@@ -285,11 +288,11 @@ class Bootstrap4 extends Base
      * @return string
      */
     protected function renderCheckableHorizontal(Checkable $control, Group $group)
-    {        
+    {
         if (!$control->isRendered())
             return '';
             
-        $label = $this->fieldLabel($control, $this->getLabelColumnClass($group));
+        $label = ($control->isShowMainLabel() ? $this->fieldLabel($control, $this->getLabelColumnClass($group)) : '');
         $groupCss = array_merge(['form-group', 'row', $control->getVisibledCss()], $group->getCss());
         $render = $this->decorate($control);
 

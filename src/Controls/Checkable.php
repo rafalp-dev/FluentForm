@@ -26,6 +26,14 @@ class Checkable extends Field
     /** @var bool */
     protected $always = false;
 
+    /** @var bool */
+    /** Czy pokazać etykietę po prawej stronie kontrolki */
+    protected $showCheckboxLabel = false;
+
+    /** @var bool */
+    /** Czy pokazać główną etykietę po lewej stronie kontrolki */
+    protected $showMainLabel = true;
+
     /**
      * @param \inkvizytor\FluentForm\Base\Handler $handler
      * @param string $type
@@ -79,6 +87,37 @@ class Checkable extends Field
     }
 
     /**
+     * @param bool $showMainLabel
+     * @return $this
+     */
+    public function showMainLabel($showMainLabel)
+    {
+        $this->showMainLabel = $showMainLabel;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $isShowMainLabel
+     * @return $this
+     */
+    public function isShowMainLabel()
+    {
+        return $this->showMainLabel;
+    }
+
+    /**
+     * @param bool $showCheckboxLabel
+     * @return $this
+     */
+    public function showCheckboxLabel($showCheckboxLabel)
+    {
+        $this->showCheckboxLabel = $showCheckboxLabel;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function render()
@@ -114,7 +153,7 @@ class Checkable extends Field
 
         $content .= config('fluentform.checkable.span') ? $this->html()->tag('span', [], '') : '';
         
-        if (!empty($this->getLabel()))
+        if ($this->showCheckboxLabel && !empty($this->getLabel()))
         {
             return $this->html()->tag('label', $attributes, $content.' '.$this->getLabel());
         }

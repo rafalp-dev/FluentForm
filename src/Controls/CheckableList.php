@@ -98,6 +98,7 @@ class CheckableList extends Field
             $checkables[] = (new Checkable($this->handler(), $this->getType()))
                 ->name($this->getName().($this->type == 'checkbox' && !Str::endsWith($this->getName(), ']') ? '[]' : ''))
                 ->label($label)
+                ->showCheckboxLabel(true)
                 ->value($value)
                 ->checked(in_array($value, $this->checked))
                 ->disabled($this->isDisabled())
