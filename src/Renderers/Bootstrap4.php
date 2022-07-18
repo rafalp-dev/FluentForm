@@ -461,6 +461,7 @@ class Bootstrap4 extends Base
     private $buttonTypes = [
         'btn-default',
         'btn-primary',
+        'btn-secondary',
         'btn-success',
         'btn-info',
         'btn-warning',
