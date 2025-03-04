@@ -36,6 +36,12 @@ class Button extends Control
 
     /** @var string */
     protected $disabled;
+    
+    /** @var string */
+    protected $visibled = true;
+    
+    /** @var string */
+    protected $rendered = true;
 
     /**
      * @param string $label
@@ -125,12 +131,54 @@ class Button extends Control
 
         return $this;
     }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function visibled($value = true)
+    {
+        $this->visibled = $value;
+        
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisibled()
+    {
+        return !empty($this->visibled);
+    }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function rendered($value = true)
+    {
+        $this->rendered = $value;
+        
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRendered()
+    {
+        return !empty($this->rendered);
+    }
     
     /**
      * @return string
      */
     public function render()
     {
+        if ($this->rendered == false)
+        {
+            return "";
+        }
         if ($this->type == 'submit' && $this->value === null)
         {
             $this->attr('value', true);
